@@ -1,2 +1,2 @@
-# snake-terminal
-Snake game from the terminal, learning from the repo from git: Project based learning
+# battleship
+Battleship game following the project based learning repo on github
