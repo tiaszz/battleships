@@ -1,6 +1,18 @@
 
 
 
+class GameBoard(object):
+    
+    def __init__(self, battleships, board_width, board_height):
+        self.battleships = battleships
+        self.shots = []
+        self.board_width = board_width
+        self.board_height = board_height
+
+
+
+
+
 class Battleship(object):
 
     @staticmethod
@@ -21,11 +33,6 @@ class Battleship(object):
 
     def __init__(self, body):
         self.body = body
-
-b = Battleship.build((1,1), 5 , "S")
-b2 = Battleship([(1,1), (2,1), (3,1), (5,1)])
-
-
 
 
 def render(board_width, board_height, shots):
@@ -66,8 +73,6 @@ def render_battleships(board_width, board_height, battleships):
         for x in range(board_width):
             row.append(board[x][y] or " ")
         print("|" + "".join(row) + "|")
-    
-
 
 
     print(header)
