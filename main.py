@@ -9,8 +9,26 @@ class GameBoard(object):
         self.board_width = board_width
         self.board_height = board_height
 
+    # * Update battleships with any hits
+    # * Save the fact that the shot a hit or a miss
+    def take_shot(self, shot_location):
+        is_hit = False
+        for b in self.battleships:
+            idx = b.body_index(shot_location)
+            if idx is not None:
+                is_hit = True
+                b.hits[idx] = True
+                break
+
+        self.shots.append(Shot(shot_location, is_hit))
 
 
+class Shot(object):
+    
+
+    def __init__(self, location, is_hit):
+        self.location = location
+        self.is_hit = is_hit
 
 
 class Battleship(object):
@@ -33,6 +51,13 @@ class Battleship(object):
 
     def __init__(self, body):
         self.body = body
+        self.hits = [False] * len(body)
+
+    def body_index(self, location):
+        try:
+            return self.body.index(location)
+        except ValueError:
+            return None
 
 
 def render(board_width, board_height, shots):
