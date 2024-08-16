@@ -20,6 +20,9 @@ class GameBoard(object):
 
         self.shots.append(Shot(shot_location, is_hit))
 
+    def is_game_over(self):
+        return all([b.is_destroyed() for b in self.battleships])
+
 
 class Shot(object):
     
@@ -56,6 +59,9 @@ class Battleship(object):
             return self.body.index(location)
         except ValueError:
             return None
+
+    def is_destroyed(self):
+        return all(self.hits)
 
 
 def render(game_board, show_battleships=False):
@@ -107,6 +113,10 @@ if __name__ == "__main__":
 
         game_board.take_shot((x,y))
         render(game_board)
+
+        if game_board.is_game_over():
+            print("YOU WIN!")
+            break
 
         # if game_has_ended:
         #   print("you win")
