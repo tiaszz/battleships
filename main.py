@@ -98,9 +98,9 @@ def render_basic(game_board, show_battleships=False):
                 elif b.direction == "S":
                     chs = ("^", "|", "v")
                 elif b.direction == "W":
-                    chs = (">", "|", "<")
+                    chs = (">", "-", "<")
                 elif b.direction == "E":
-                    chs = ("<", "|", ">")
+                    chs = ("<", "-", ">")
                 else:
                     raise "Unknown direction"
 
@@ -192,7 +192,7 @@ def run(announce_f, render_f):
 
     battleships = [
         Battleship.build((1,1), 2, "N"),
-        Battleship.build((5,8), 5, "N"),
+        Battleship.build((5,8), 5, "W"),
         Battleship.build((2,3), 4, "E")
     ]
 
