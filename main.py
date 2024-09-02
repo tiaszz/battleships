@@ -1,5 +1,6 @@
 import copy
 import random
+import time
 
 class GameBoard(object):
     
@@ -165,6 +166,12 @@ def get_random_ai_shot(game_board):
     y = random.randint(0, game_board.height - 1)
     return (x, y)
 
+def random_sleepy_ai(sleep_time):
+    def f(game_board):
+        time.sleep(sleep_time)
+        return get_random_ai_shot(game_board)
+    return f
+
 def get_human_shot(game_board):
     inp = input("Where do you want to shoot?\n")
     # TODO: deal with invalid input
@@ -175,10 +182,18 @@ def get_human_shot(game_board):
     return (x, y)
 
 def run(announce_f, render_f):
+    print("Before starting the game.")
+    print("Remember to fulfill the files in the secret folder.")
+    print("If you didn't fulfill it yet. Do it and restart the game")
+    time.sleep(5)
+
+    player_1 = str(input("Name first player: "))
+    player_2 = str(input("Name second player: "))
+
     battleships = [
         Battleship.build((1,1), 2, "N"),
-        # Battleship.build((5,8), 5, "N"),
-        # Battleship.build((2,3), 4, "E")
+        Battleship.build((5,8), 5, "N"),
+        Battleship.build((2,3), 4, "E")
     ]
 
     game_boards = [
@@ -187,8 +202,8 @@ def run(announce_f, render_f):
     ]
 
     players = [
-        Player("Rob", get_human_shot),
-        Player("Alice", get_random_ai_shot)
+        Player(player_1, get_human_shot),
+        Player(player_2, random_sleepy_ai(2))
     ]
 
     offensive_idx = 0
@@ -211,7 +226,7 @@ def run(announce_f, render_f):
                 announce_f("battleship_destroyed", {"player": offensive_player.name})
             else:
                 announce_f("battleship_hit", {"player": offensive_player.name})
-        render_f(defensive_board)
+        render_f(defensive_board, True)
 
         if defensive_board.is_game_over():
             announce_f("game_over", {"player": offensive_player.name})
